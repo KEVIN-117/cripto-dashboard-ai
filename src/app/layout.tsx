@@ -38,7 +38,10 @@ function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
             </Link>
           </div>
         </nav>
-        {children}
+        <main className="container mx-auto">
+
+          {children}
+        </main>
       </body>
     </html>
   );
