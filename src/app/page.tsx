@@ -1,44 +1,68 @@
+import { HttpClient } from '@/utils/HttpClient'
 interface BookType {
   id: number;
-  title: string;
+  title: string
   author: AuthorType
 }
 
 interface AuthorType {
   id: number;
-  name: string;
+  name: string
 }
 
-async function fetchHelper<T>(url: string): Promise<T[]> {
-  const res = await fetch(url);
-  const data = await res.json() as T[];
-
-  return data;
-}
 export default async function HomePage() {
-  const books = await fetchHelper<BookType>(`${process.env.API_URL}books`);
-  const authors = await fetchHelper<AuthorType>(`${process.env.API_URL}authors`);
-
+  
+  const books = await HttpClient<BookType[]>({
+    path: 'books'
+  })
+  const authors = await HttpClient<AuthorType[]>({
+    path: 'authors'
+  })
   return (
     <div>
       esto es el home, componente page de /app/page.
-      <h1 className="text-2xl uppercase font-extrabold">libros</h1>
-      <div className="grid gap-2 container mx-auto grid-cols-3">
-        {books.map((book: BookType) => (
-          <div key={book.id} className="p-4 border border-gray-300 rounded-lg shadow-xl shadow-indigo-600">
-            <h2 className="text-xl font-bold">{book.title}</h2>
-            <p className="text-gray-300">Author: {book.author.name}</p>
-          </div>
-        ))}
+      <h1 className="text-2xl font-extrabold">
+        Books List
+      </h1>
+      <hr />
+      <div className="grid grid-cols-3 gap-2">
+        {
+          books.map((book: BookType) => (<BookUi key={book.id} book={book} />))
+        }
       </div>
-      <h1 className="text-2xl uppercase font-extrabold">authors</h1>
-      <div className="grid gap-2 container mx-auto grid-cols-3">
-        {authors.map(({id, name}: AuthorType) => (
-          <div key={id} className="p-4 border border-gray-300 rounded-lg shadow-xl shadow-indigo-600">
-            <h2 className="text-xl font-bold">{name}</h2>
-          </div>
-        ))}
+
+      <h1 className="text-2xl font-extrabold">
+        Authors List
+      </h1>
+
+      <div className="grid grid-cols-3 gap-2">
+        {
+          authors.map((author: AuthorType) => (<AuthorUi key={author.id} author={author} />))
+        }
       </div>
+    </div>
+  )
+}
+
+function BookUi({ book }: { book: BookType }) {
+  const { author, id, title } = book;
+  return (
+    <div className="p-4 border rounded shadow shadow-indigo-500">
+      <h2 className="text-2xl font-extrabold">{title}</h2>
+      <p className="text-gray-300">ID: {id}</p>
+      <hr />
+      <AuthorUi author={author} />
+    </div>
+  )
+}
+
+function AuthorUi({ author }: { author: AuthorType }) {
+  const { id, name } = author
+
+  return (
+    <div>
+      <p className="text-gray-300">Author: {name}</p>
+      <p className="text-gray-300">Author ID: {id}</p>
     </div>
   )
 }
