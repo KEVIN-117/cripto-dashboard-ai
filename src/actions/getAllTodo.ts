@@ -37,7 +37,7 @@ export async function createTodo(data: FormData): Promise<ResponseApi> {
     const todoData: CreateTodoType = {
         title: data.get('title') as string,
         description: data.get('description') as string,
-        priority: data.get('priority') as 'low' | 'medium' | 'high',
+        priority: data.get('priority')  as 'low' | 'medium' | 'high',
     }
     const todo = await HttpClient<CreateTodoType>({
         method: 'POST',
