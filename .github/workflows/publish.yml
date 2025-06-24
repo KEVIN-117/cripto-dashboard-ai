@@ -8,7 +8,7 @@ on:
 env:
     # Set the base URL for Storybook deployment use envs for github username and repo name
     # Example: https://username.github.io/repo-name
-  BASE_URL: https://KEVIN-117.github.io/cripto-dashboard-ai
+  BASE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
 jobs:
   quality-checks:
     name: Quality Checks
