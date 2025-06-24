@@ -43,6 +43,10 @@ jobs:
   build-storybook:
     name: Build and Deploy Storybook
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
     needs: quality-checks
     outputs:
       SANITIZED_BRANCH_NAME: ${{ steps.sanitize_branch_name.outputs.SANITIZED_BRANCH_NAME }}
