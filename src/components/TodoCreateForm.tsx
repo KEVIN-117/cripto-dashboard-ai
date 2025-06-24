@@ -5,7 +5,6 @@ import type React from "react"
 import { useState, type FormEvent } from "react"
 import {
     Box,
-    Button,
     Typography,
     Modal,
     TextField,
@@ -21,7 +20,7 @@ import {
 import { Add, Close, CheckCircle } from "@mui/icons-material"
 import { useTheme as useMuiTheme } from "@mui/material/styles"
 import { createTodo } from "@/actions/getAllTodo"
-
+import { Button } from "./button/Button"
 interface FormErrors {
     title?: string
     description?: string
@@ -83,7 +82,7 @@ export function CreateTodoForm() {
         setLoading(true)
         setErrors({})
         console.log(formData);
-        
+
 
         try {
             const submitFormData = new FormData()
@@ -124,6 +123,7 @@ export function CreateTodoForm() {
     return (
         <>
             <Button
+                ButtonType="gradient"
                 variant="contained"
                 startIcon={<Add />}
                 onClick={handleOpen}
@@ -133,12 +133,6 @@ export function CreateTodoForm() {
                     py: 1.5,
                     fontSize: "1rem",
                     fontWeight: 600,
-                    background: `linear-gradient(135deg, ${theme.palette.primary.main} 0%, ${theme.palette.secondary.main} 100%)`,
-                    boxShadow: `0 8px 25px ${theme.palette.primary.main}40`,
-                    "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: `0 12px 35px ${theme.palette.primary.main}50`,
-                    },
                     transition: "all 0.3s ease",
                 }}
             >
@@ -311,6 +305,7 @@ export function CreateTodoForm() {
                                         </Select>
 
                                         <Button
+                                            ButtonType="gradient"
                                             type="submit"
                                             variant="contained"
                                             size="large"
