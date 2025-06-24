@@ -78,7 +78,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: storybook-static
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
 
@@ -87,7 +87,7 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./storybook-static
+          publish_dir: storybook-static
           destination_dir: ${{ steps.sanitize_branch_name.outputs.SANITIZED_BRANCH_NAME }}
           user_name: "github-actions[bot]"
           user_email: "github-actions[bot]@users.noreply.github.com"
@@ -98,25 +98,25 @@ jobs:
           else
             echo "Storybook is available at ${{ env.BASE_URL }}/${{ steps.sanitize_branch_name.outputs.SANITIZED_BRANCH_NAME }}/"
           fi
-  deploy:
-    runs-on: ubuntu-latest
-        # Job steps
-    steps:
-        # Manual Checkout
-      - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-            fetch-depth: 0
-        # Set up Node
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-            node-version: '20'
-        #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
-      - name: Build and Deploy Storybook
-        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
-        with:
-            install_command: yarn install # default: npm ci
-            build_command: yarn build-storybook # default: npm run build-storybook
-            path: storybook-static # default: dist/storybook
-            checkout: false # default: true
+#   deploy:
+#     runs-on: ubuntu-latest
+#         # Job steps
+#     steps:
+#         # Manual Checkout
+#       - name: Checkout repository
+#         uses: actions/checkout@v3
+#         with:
+#             fetch-depth: 0
+#         # Set up Node
+#       - name: Set up Node.js
+#         uses: actions/setup-node@v4
+#         with:
+#             node-version: '20'
+#         #👇 Add Storybook build and deploy to GitHub Pages as a step in the workflow
+#       - name: Build and Deploy Storybook
+#         uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+#         with:
+#             install_command: yarn install # default: npm ci
+#             build_command: yarn build-storybook # default: npm run build-storybook
+#             path: storybook-static # default: dist/storybook
+#             checkout: false # default: true
