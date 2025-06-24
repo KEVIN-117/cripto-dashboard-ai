@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Link from "next/link";
-
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter"
+import { ThemeProvider } from "@/theme/ThemeProvider";
+import { ThemeToggle } from "@/components/ToggleTheme";
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -20,28 +22,35 @@ export const metadata: Metadata = {
 
 function RootLayout({ children }: Readonly<{ children: React.ReactNode; }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
-          <div className="text-lg font-bold">Crypto Dashboard</div>
-          <div className="flex space-x-4">
-            <Link href="/" className="hover:underline">
-              Home
-            </Link>
-            <Link href="/admin" className="hover:underline">
-              Admin Panel
-            </Link>
-            <Link href="/auth" className="hover:underline">
-              Auth Section
-            </Link>
-          </div>
-        </nav>
-        <main className="container mx-auto">
+        <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+          <ThemeProvider defaultTheme="system" storageKey="todo-theme">
+            <nav className="flex items-center justify-between p-4 bg-gray-800 text-white">
+              <div className="text-lg font-bold">Crypto Dashboard</div>
+              <div className="flex space-x-4">
+                <Link href="/" className="hover:underline">
+                  Home
+                </Link>
+                <Link href="/admin" className="hover:underline">
+                  Admin Panel
+                </Link>
+                <Link href="/auth" className="hover:underline">
+                  Auth Section
+                </Link>
+              </div>
+              <ThemeToggle />
+            </nav>
+            <main className="container mx-auto">
 
-          {children}
-        </main>
+              {children}
+            </main>
+          </ThemeProvider>
+
+        </AppRouterCacheProvider>
+
       </body>
     </html>
   );
